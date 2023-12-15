@@ -30,18 +30,18 @@ def str_column_to_int(dataset, col):
 # Load dataset
 pima_filename = "pima-indians-diabetes.csv"
 pima_dataset = load_csv(pima_filename)
-print(f"Loaded data file {pima_filename} with {len(pima_dataset)} rows 
-      and {len(pima_dataset[0])} columns.")
+print(f"Loaded data file {pima_filename} with {len(pima_dataset)} rows \
+and {len(pima_dataset[0])} columns.")
 print(f"The first element is {pima_dataset[0]}.")
 # Convert string columns to float
 for i in range(len(pima_dataset[0])):
     str_column_to_float(pima_dataset, i)
-print(f"After operation: {pima_dataset[0]}")
+print(f"After operation: {pima_dataset[0]}.")
 
 iris_filename = "iris.csv"
 iris_dataset = load_csv(iris_filename)
-print(f"Loaded data file {iris_filename} with {len(iris_dataset)} rows 
-      and {len(iris_dataset[0])} columns.")
+print(f"Loaded data file {iris_filename} with {len(iris_dataset)} rows \
+and {len(iris_dataset[0])} columns.")
 print(f"The first element is {iris_dataset[0]}.")
 # Convert string column to float
 for i in range(4):
