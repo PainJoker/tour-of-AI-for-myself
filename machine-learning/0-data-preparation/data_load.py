@@ -20,7 +20,7 @@ def str_column_to_float(dataset, col):
 # Convert string column to integer     
 def str_column_to_int(dataset, col):
     class_values = [row[col] for row in dataset]
-    unique = set(class_values) # Eliminate the dupulicate classes in datasets
+    unique = set(class_values) # Eliminate the duplicate classes in datasets
     lookup = dict()
     for i, value in enumerate(unique): # Add a counter in the class set
         lookup[value] = i # Convert to a dict
