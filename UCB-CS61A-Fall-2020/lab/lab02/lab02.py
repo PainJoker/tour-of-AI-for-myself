@@ -118,7 +118,10 @@ def cycle(f1, f2, f3):
     """
     def cycle_count(n):
         def ret_compose(x):
+            identity = lambda x: x
             def choice(index):
+                if index == 0:
+                    return identity 
                 if index % 3 == 1: return f1
                 elif index % 3 == 2: return f2
                 else: return f3
@@ -127,11 +130,9 @@ def cycle(f1, f2, f3):
             #     def h(x):
             #         return f(g(x))
             #     return h
-            compose = lambda f,g: lambda x: f(g(x))  # should be correct
-            iter_func = lambda x: x
-            if n == 0:
-                return iter_func(x)
-            i = 1
+            compose = lambda f, g: lambda x: f(g(x))  # should be correct
+            iter_func = identity
+            i = 0
             while i <= n:
                 iter_func = compose(choice(i), iter_func)
                 i += 1
