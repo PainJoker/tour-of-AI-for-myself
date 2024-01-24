@@ -124,8 +124,8 @@ def pig_pass(player_score, opponent_score):
     False
     """
     # BEGIN PROBLEM 4b
-    return (opponent_score - player_score > 0 and 
-            opponent_score - player_score < 3) 
+    diff = opponent_score - player_score
+    return (diff > 0 and diff < 3) 
     # END PROBLEM 4b
 
 
@@ -177,29 +177,19 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     def opponent_score(player):
         return score0 if player else score1
     
-    def check_point(who, roll_score):
-        ret_val = own_score(who) + roll_score
-        return ret_val
-
-    def take_turn_check(who, score0, score1):
-        roll_score = take_turn(own_strategy(who), opponent_score(who), dice)
-        # checkout
-        if who: score1 = check_point(who, roll_score)
-        else: score0 = check_point(who, roll_score)
-        return score0, score1
-        
     while score0 < goal and score1 < goal:
-        score0, score1 = take_turn_check(who, score0, score1) 
+        roll_score = take_turn(own_strategy(who), opponent_score(who), dice)
+        if who: 
+            score1 += roll_score
+        else: 
+            score0 += roll_score
+        # BEGIN PROBLEM 6
         say = say(score0, score1)
-        while extra_turn(own_score(who), opponent_score(who)) and own_score(who) < goal:
-            score0, score1 = take_turn_check(who, score0, score1)
-            say = say(score0, score1)
-        who = other(who)
+        # END PROBLEM 6
+        if not extra_turn(own_score(who), opponent_score(who)):
+            who = other(who)
     # END PROBLEM 5
     # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 6
     return score0, score1
 
 
@@ -400,7 +390,7 @@ def run_experiments():
     if True:  # Change to True to test extra_turn_strategy
         print('extra_turn_strategy win rate:', average_win_rate(extra_turn_strategy))
 
-    if False:  # Change to True to test final_strategy
+    if True:  # Change to True to test final_strategy
         print('final_strategy win rate:', average_win_rate(final_strategy))
 
     "*** You may add additional experiments as you wish ***"
@@ -431,10 +421,13 @@ def extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6):
 def final_strategy(score, opponent_score):
     """Write a brief description of your final strategy.
 
-    *** YOUR DESCRIPTION HERE ***
+    Based on extra_turn strategy add if statement:
+    if current score difference is exactly equal to 2, then roll full 10 dice.
     """
     # BEGIN PROBLEM 12
-    return 6  # Replace this statement
+    diff = opponent_score - score
+    if diff == 2: return 10
+    else: return extra_turn_strategy(score, opponent_score)
     # END PROBLEM 12
 
 ##########################
